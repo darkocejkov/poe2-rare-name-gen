@@ -1,32 +1,13 @@
 "use client"
 
 import {useState} from "react";
-import localFont from 'next/font/local'
 import Image from "next/image";
 import {GoMute, GoUnmute} from "react-icons/go";
 
 import {produce} from 'immer'
 
 
-const fontin = localFont({
-  src: [
-    {
-      path: 'assets/font/Fontin-Regular.ttf',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: 'assets/font/Fontin-Italic.ttf',
-      weight: '400',
-      style: 'italic',
-    },
-    {
-      path: 'assets/font/Fontin-Bold.ttf',
-      weight: '700',
-      style: 'normal',
-    },
-  ]
-})
+
 
 const words = [
   "Squirm",
@@ -207,7 +188,7 @@ export default function Home() {
 
 
   return (
-    <div className={`bg-gradient-to-b from-black to-red-600 flex flex-col justify-center align-center gap-24 w-screen h-screen text-center ${fontin.className}`}>
+    <div className={`bg-gradient-to-b from-black to-red-600 flex flex-col justify-center align-center gap-24 w-screen h-screen text-center`}>
 
 
       <h1 className='text-6xl'>PoE <span className='text-yellow-600'>Rare</span> Generator</h1>
