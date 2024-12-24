@@ -1,101 +1,237 @@
+"use client"
+
+import {useState} from "react";
+import localFont from 'next/font/local'
 import Image from "next/image";
+import {GoMute, GoUnmute} from "react-icons/go";
+
+import {produce} from 'immer'
+
+
+const fontin = localFont({
+  src: [
+    {
+      path: 'assets/font/Fontin-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: 'assets/font/Fontin-Italic.ttf',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: 'assets/font/Fontin-Bold.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+  ]
+})
+
+const words = [
+  "Squirm",
+  "Muck",
+  "Fester",
+  "Gristle",
+  "Squelch",
+  "Ooze",
+  "Gunk",
+  "Sludge",
+  "Clammy",
+  "Creak",
+  "Blob",
+  "Nasty",
+  "Gaggle",
+  "Crusty",
+  "Flake",
+  "Pus",
+  "Slime",
+  "Drool",
+  "Phlegm",
+  "Grime",
+  "Scum",
+  "Moist",
+  "Gnash",
+  "Splash",
+  "Smegma",
+  "Mucus",
+  "Maggot",
+  "Flesh",
+  "Pound",
+  "Fetid",
+  "Seeping",
+  "Diarrhea",
+  "Scab",
+  "Pustulent",
+  "Corpus",
+  "Bung",
+  "Fecid",
+  "Fetid",
+  "Crung",
+  "Matter",
+  "Krindle",
+  "Crindle",
+  "Squanch",
+  "Squish",
+  "Spleen",
+  "Apex",
+  "Secrete",
+  "Hatch",
+  "Clang",
+  "Fang",
+  "Blister",
+  "Callous",
+  "Bile",
+  "Bilous",
+  "Chafe",
+  "Gush",
+  "Cyst",
+  "Cystaceous",
+  "Lump",
+  "Rot",
+  "Rank",
+  "Slop",
+  "Ere",
+  "Skatter",
+  "Skin",
+  "Mash",
+  "Waste",
+  "Stench",
+  "Grunch",
+  "Fecal",
+  "Tongue",
+  "Tepid",
+  "Algae",
+  "Fowl",
+  "Foul",
+  "Rankor",
+  "Schism",
+  "Rip",
+  "Rancid",
+  "Vulgar",
+  "Sebaceous",
+  "Wing",
+  "Thigh",
+  "Eye",
+  "Coch",
+  "Bane",
+  "Clang",
+  "Powder",
+  "Winge",
+  "Chog",
+  "Eel",
+  "Blood",
+  "Hemo",
+  "Glob",
+  "Musk",
+  "Gland",
+  "Wring",
+  "Frack",
+  "Oil",
+  "Slig",
+  "Agony",
+  "Gasp",
+  "Feces",
+  "Fetus",
+  "Fetal",
+  "Fecundid",
+  "Colonic",
+  "Young",
+  "Wrinkle",
+  "Wet",
+  "Munge",
+  "Mange",
+  "Rabid",
+  "Cream",
+  "Worm",
+
+];
+
+// @TODO: Could be much better at generating weird names by respecting english linguistic rules lmao
+const adjs = []
+const nouns = []
+const verbs = []
+
+const arrayRandom = <T,>(array: T[]): T => {
+  const randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
+}
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  const [playSound, setPlaySound] = useState(true)
+
+  const [history, setHistory] = useState<string[]>([])
+
+
+  const generateName = (): string => {
+
+    let prefix = arrayRandom(words)
+    let suffix = arrayRandom(words).toLowerCase()
+
+    const prefixLast = prefix[prefix.length - 1]
+    const suffixFirst = suffix[0]
+
+    // if the first and last letters are the same, remove one
+    if(prefixLast === suffixFirst){
+      suffix = suffix.slice(1)
+    }
+
+    return prefix + suffix
+
+
+  }
+
+  const exaltedOrbSound = new Audio('./exalted.mp3')
+
+
+  const [name, setName] = useState<string>()
+
+  const handleName = (name: string) => {
+    setName(name)
+    setHistory(produce(draft => {
+      draft.push(name)
+    }))
+
+  }
+
+  const handleGenerate = async () => {
+    const name = generateName()
+
+    handleName(name)
+
+    if(playSound) await exaltedOrbSound.play()
+  }
+
+  // @TODO: Add history display
+
+
+  return (
+    <div className={`bg-gradient-to-b from-black to-red-600 flex flex-col justify-center align-center gap-24 w-screen h-screen text-center ${fontin.className}`}>
+
+
+      <h1 className='text-6xl'>PoE <span className='text-yellow-600'>Rare</span> Generator</h1>
+
+      <div className='h-14'>
+        {name != null ? (
+            <p className='text-2xl underline-offset-4 underline'>{name}</p>
+        ) : (
+            <p className='text-2xl italic'>???</p>
+        )}
+
+      </div>
+
+      <div className='flex flex-row gap-4 self-center'>
+
+        <button onClick={() => setPlaySound((sound) => !sound)}>
+          {playSound ? (<GoUnmute />) : (<GoMute />)}
+        </button>
+
+        <button onClick={handleGenerate}
+                className='flex flex-row gap-2 self-center transition-all hover:shadow-hard w-fit px-10 py-1 rounded-xl'>Generate
+          <Image src='/exalted_orb.png' width={25} height={25} alt={"PoE Exalted Orb"}/>
+        </button>
+      </div>
     </div>
   );
 }
